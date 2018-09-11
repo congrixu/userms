@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>list.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3"/>
+    <meta name="description" content="this is my page"/>
+    <meta name="content-type" content="text/html; charset=UTF-8"/>
+    
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/bootstrap-3.3.7/css/bootstrap.css}"/>
+  </head>
+  
+  <body>
+	<div class="container-fluid">
+		<form class="form-inline" action="/system/user/query" method="post">
+		  <div class="form-group">
+		    <label for="">Name</label>
+		    <input type="text" class="form-control" id="" name="userName" placeholder="userName"/>
+		  </div>
+		  <button type="submit">查询</button>
+		  <button type="button" id="add_user">添加</button>
+		</form>
+		
+		<table class="table table-bordered" id="user_table">
+		  <tr>
+		  	<th>登录名</th>
+		  	<th>密码</th>
+		  	<th>单位</th>
+		  	<th>id</th>
+		  	<th>操作</th>
+		  </tr>
+		  <tr th:each="user:${users}">
+		  	<td th:text="${user.userName}"></td>
+		  	<td th:text="${user.password}"></td>
+		  	<td ></td>
+		  	<td th:text="${user.id}"></td>
+		  	<td>
+		  		<a href="javascript:void(0)" name="detail_a" th:attr="userid=${user.id}">详细</a>
+		  		<a href="javascript:void(0)" name="del_a" th:attr="userid=${user.id}">删除数据</a>
+		  	</td>
+		  </tr>
+		</table> 
+		<div>
+		
+		</div>
+	</div>
+	<script th:src="@{/lib/jquery-3.3.1/jquery-3.3.1.js}"></script>
+	<script th:src="@{/lib/bootstrap-3.3.7/js/bootstrap.js}"></script>
+  </body>
+</html>
+<script type="text/javascript">
+$(function(){
+	$("#user_table a[name=detail_a]").click(function(){
+		var userid = $(this).attr("userid");
+		var url="http://localhost:8080/system/user/get/"+userid;
+		window.open(url);
+	});
+	
+	$("#add_user").click(function(){
+		var url="http://localhost:8080/system/user/edit/view/";
+		window.location=url;
+	});
+	
+	$("#user_table a[name=del_a]").click(function(){
+		var userid = $(this).attr("userid");
+		var url="http://localhost:8080/system/user/delete/"+userid;
+		window.location=url;
+	});
+});
+</script>
+

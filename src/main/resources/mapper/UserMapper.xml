@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dragon.userms.system.dao.UserDao">
+  <select id="findAll" parameterType="com.dragon.userms.system.model.User" resultType="com.dragon.userms.system.model.User" >
+       SELECT
+			u.id AS id,
+			u.password,
+			u.user_name AS username,
+			u.real_name AS realName,
+			u.sex
+		FROM
+			sys_user u
+		WHERE
+			1 = 1
+		<if test="userName !=null ">
+		  AND u.user_name LIKE "%"#{userName}"%"
+		</if>
+		<if test="realName !=null ">
+		  AND u.real_name LIKE "%"#{realName}"%"
+		</if>
+		<if test="sex !=null ">
+		  AND u.sex=#{realName}
+		</if>
+    </select>
+</mapper>
+
